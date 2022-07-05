@@ -17,7 +17,7 @@ const ActivityList = () => {
     <div className="">
         {activitiesByDate.map( activity => (
             <div key={activity.id}
-                className="m-4 stats stats-vertical shadow flex-col">
+                className="w-{30%} m-4 stats stats-vertical shadow flex-col">
                 <div className='stat'>
                     <div className='stat-value'>{activity.title}</div>
                     <div className='stat-desc'>{activity.date}</div>
