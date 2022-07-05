@@ -1,10 +1,8 @@
 import React from 'react'
+import { useStore } from '../stores/store'
 
-interface Props {
-    openForm: () => void;
-}
-
-const NavBar = ({openForm}: Props) => {
+const NavBar = () => {
+    const { activityStore } = useStore()
   return (
     <nav className='bg-gray-800'>
         <div className='max-w-7xl mx-auto px-2 sm:-px-6 lg:px-8'>
@@ -38,7 +36,7 @@ const NavBar = ({openForm}: Props) => {
 
                 <div>
                     <button className='btn btn-accent'
-                    onClick={openForm}
+                    onClick={() => activityStore.openForm()}
                     >Add Activity</button>
                 </div>
             </div>

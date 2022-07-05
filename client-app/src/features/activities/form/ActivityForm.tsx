@@ -1,14 +1,11 @@
+import { observer } from 'mobx-react-lite'
 import React, { ChangeEvent, useState } from 'react'
-import { Activity } from '../../../app/models/activity'
+import { useStore } from '../../../app/stores/store'
 
-interface Props {
-  activity: Activity | undefined,
-  closeForm: () => void,
-  createOrEdit: (activity: Activity) => void,
-  submitting: boolean,
-}
+const ActivityForm = () => {
 
-const ActivityForm = ({activity: selectedActivity, closeForm, createOrEdit, submitting}: Props) => {
+  const { activityStore } = useStore()
+  const { selectedActivity, closeForm, createActivity, updateActivity, loading } = activityStore
 
   const initialState = selectedActivity ?? {
     id: '',
@@ -24,7 +21,7 @@ const ActivityForm = ({activity: selectedActivity, closeForm, createOrEdit, subm
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    createOrEdit(activity)
+    activity.id ? updateActivity(activity) : createActivity(activity)
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -53,7 +50,7 @@ const ActivityForm = ({activity: selectedActivity, closeForm, createOrEdit, subm
           value={activity.venue} name='venue'
           onChange={handleChange}/>
           <div className='w-full my-2 flex justify-end'>
-            <button className='mx-2 p-2 rounded-md bg-green-500' type='submit' disabled={submitting}>Submit</button>
+            <button className='mx-2 p-2 rounded-md bg-green-500' type='submit' disabled={loading}>Submit</button>
             <button className='mx-2 p-2 rounded-md bg-yellow-300'
             onClick={closeForm}>Cancel</button>
           </div>
@@ -61,5 +58,5 @@ const ActivityForm = ({activity: selectedActivity, closeForm, createOrEdit, subm
   )
 }
 
-export default ActivityForm
+export default observer(ActivityForm)
 

@@ -1,13 +1,14 @@
 import React from 'react'
+import LoadingComponent from '../../../app/layout/LoadingComponent'
 import { Activity } from '../../../app/models/activity'
+import { useStore } from '../../../app/stores/store'
 
-interface Props {
-    activity: Activity,
-    cancelSelectActivity: () => void,
-    openForm: (id: string) => void,
-}
+const ActivityDetails = () => {
+    const { activityStore } = useStore()
+    const { selectedActivity: activity, openForm, cancelSelectedActivity } = activityStore
 
-const ActivityDetails = ({activity, cancelSelectActivity, openForm}: Props) => {
+    if(!activity) return <LoadingComponent />
+
   return (
     <div className='height-auto bg-white w-auto my-4 rounded-md shadow-xl'>
         <img src={`assets/food.bmp`} alt='activity lol'
@@ -26,7 +27,7 @@ const ActivityDetails = ({activity, cancelSelectActivity, openForm}: Props) => {
             onClick={() => openForm(activity.id)}
             >Edit</button>
             <button className='w-24 p-2 rounded-sm bg-red-500'
-            onClick={cancelSelectActivity}
+            onClick={cancelSelectedActivity}
             >Cancel</button>
         </div>
     </div>
