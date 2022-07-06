@@ -8,11 +8,11 @@ import ActivityList from './ActivityList'
 
 const ActivityDashboard = () => {
   const { activityStore } = useStore()
-  const { selectedActivity, editMode } = activityStore 
+  const { loadActivities, activityRegistry } = activityStore 
 
   useEffect(() => {
-    activityStore.loadActivities()
-  }, [activityStore])
+    if (activityRegistry.size <= 1) loadActivities()
+  }, [activityRegistry.size, loadActivities])
 
   if (activityStore.loadingInitial) return <LoadingComponent/>
   return (
@@ -20,11 +20,8 @@ const ActivityDashboard = () => {
         <div className=''>
             <ActivityList />
         </div>
-        <div className='flex flex-col mx-10'>
-            {selectedActivity && !editMode && 
-            <ActivityDetails />}
-            {editMode && 
-            <ActivityForm />}
+        <div>
+          <h2>Filter</h2>
         </div>
     </main>
   )
