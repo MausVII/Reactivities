@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import React, { SyntheticEvent, useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import { useStore } from '../../../app/stores/store'
 
 const ActivityList = () => {
@@ -32,8 +33,8 @@ const ActivityList = () => {
                     <button className='btn btn-ghost'>{activity.category}</button>
 
                     <div className='flex justify-end'>
-                        <button className='btn btn-primary mx-2'
-                        onClick={() => activityStore.selectActivity(activity.id)}>View</button>
+                        <NavLink to={`/activities/${activity.id}`}><button className='btn btn-primary mx-2'
+                        >View</button></NavLink>
                         {!loading && target != activity.id && 
                         <button name={activity.id}
                         className='btn btn-secondary mx-2'

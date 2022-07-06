@@ -1,12 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { useStore } from '../stores/store'
 
 const NavBar = () => {
-    const { activityStore } = useStore()
   return (
     <nav className='bg-gray-800'>
-        <div className='max-w-7xl mx-auto px-2 sm:-px-6 lg:px-8'>
+        <div className='flex justify-between max-w mx-auto'>
             <div className='flex-1 flex items-center justify-center sm:items-stretch sm:justify-start'>
                 <div className='flex-shrink-0 flex items-center'>
                     <h1 className='text-white font-bold border-r border-l border-white p-2'>Reactivities</h1>
@@ -23,8 +21,9 @@ const NavBar = () => {
             </div>
 
             <div>
-                <NavLink to='/createActivity'><button className='btn btn-accent'
-                >Add Activity</button></NavLink>
+                <NavLink to='/createActivity'>
+                    <button className='btn btn-accent'>Add Activity</button>
+                </NavLink>
             </div>
         </div>
     </nav>

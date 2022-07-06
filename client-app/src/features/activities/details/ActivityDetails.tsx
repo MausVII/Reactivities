@@ -1,13 +1,20 @@
-import React from 'react'
+import { observer } from 'mobx-react-lite'
+import React, { useEffect } from 'react'
+import { NavLink, useParams } from 'react-router-dom'
 import LoadingComponent from '../../../app/layout/LoadingComponent'
 import { Activity } from '../../../app/models/activity'
 import { useStore } from '../../../app/stores/store'
 
 const ActivityDetails = () => {
     const { activityStore } = useStore()
-    const { selectedActivity: activity, openForm, cancelSelectedActivity } = activityStore
+    const { selectedActivity: activity, loadActivity, loadingInitial } = activityStore
+    const { id } = useParams<{id: string}>()
 
-    if(!activity) return <LoadingComponent />
+    useEffect(() => {
+        if(id) loadActivity(id)
+    }, [id, loadActivity])
+
+    if(loadingInitial || !activity) return <LoadingComponent />
 
   return (
     <div className='height-auto bg-white w-auto my-4 rounded-md shadow-xl'>
@@ -23,15 +30,13 @@ const ActivityDetails = () => {
         </div>
 
         <div className=' mx-4 py-2 flex justify-between'>
-            <button className='w-24 p-2 rounded-sm bg-green-500'
-            onClick={() => openForm(activity.id)}
-            >Edit</button>
-            <button className='w-24 p-2 rounded-sm bg-red-500'
-            onClick={cancelSelectedActivity}
-            >Cancel</button>
+            <NavLink to={`/manage/${activity.id}`}><button className='w-24 p-2 rounded-sm bg-green-500'
+            >Edit</button></NavLink>
+            <NavLink to='/activities'><button className='w-24 p-2 rounded-sm bg-red-500'
+            >Cancel</button></NavLink>
         </div>
     </div>
   )
 }
 
-export default ActivityDetails
+export default observer(ActivityDetails)
